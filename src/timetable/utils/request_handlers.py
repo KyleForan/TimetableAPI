@@ -1,4 +1,5 @@
 from .constants import BASE_URL, CATEGORY_IDS, COLLEGE_ID
+from datetime import date, datetime, timedelta
 
 # Search Modules
 # https://scientia-eu-v4-api-d4-01.azurewebsites.net/api/Public/CategoryTypes/525fe79b-73c3-4b5c-8186-83c652b3adcc/Categories/FilterWithCache/50a55ae1-1c87-4dea-bb73-c9e67941e1fd?pageNumber=1&query=
@@ -35,9 +36,12 @@ def getTimetableURL() -> str:
     url += "/CategoryTypes/Categories/Events/Filter/"
     url += COLLEGE_ID
 
-    # TODO: make dynamic
-    # NOTE: Monday - Friday, day filtering with week arg
-    url += "?startRange=2026-10-17T23:00:00.000Z&endRange=2026-10-27T23:59:59.999Z"
+    today = datetime.combine(date.today(), datetime.min.time())
+    weekStart = today - timedelta(days=today.weekday())
+    weekEnd = weekStart + timedelta(days=4,  hours=23, minutes=59, milliseconds=999)
+
+    url += f"?startRange={ weekStart.isoformat(timespec='milliseconds') }Z"
+    url += f"&endRange={ weekEnd.isoformat(timespec='milliseconds') }Z"
 
     return url
 
