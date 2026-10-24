@@ -6,9 +6,10 @@ from .utils.parsers import parseSearchResults, parseTimetable
 
 
 def main() -> None:
+
     # TODO: User input
-    query = "TU863/3"
-    category = "course"
+    query = "AG-003"
+    category = "rooms"
 
     # TODO: Handle Null
     url = getURL(category, query) 
@@ -17,7 +18,7 @@ def main() -> None:
     response = requests.post(url)
     results = parseSearchResults(response.json())
 
-    #TODO: better handling
+    # TODO: better handling
     x = list(results.items())[0][1]
     payload = {CATEGORY_IDS.get(category, ""): [x]}
 

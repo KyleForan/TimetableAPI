@@ -1,4 +1,4 @@
-WEEK = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+WEEK = { "M":"Monday", "t": "Tuesday", "W": "Wednesday", "T": "Thursday", "F": "Friday" }
 
 BASE_URL = "https://scientia-eu-v4-api-d4-01.azurewebsites.net/api/Public"
 

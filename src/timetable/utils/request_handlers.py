@@ -26,8 +26,6 @@ def getURL(category: str, query: str) -> str:
     url += "?pageNumber=1&query="
     url += query
 
-    print(f"{url = }")
-
     return url
 
 
