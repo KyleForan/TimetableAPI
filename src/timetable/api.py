@@ -8,10 +8,10 @@ from timetable.utils.request_handlers import generateJSON, getTimetableURL, getU
 app = FastAPI()
 
 
-@app.get("/course/{course_name}")
-def get_course(course_name: str):
+@app.get("/course")
+def get_course(name: str):
 
-    url = getURL("course", course_name)
+    url = getURL("course", name)
     response = requests.post(url)
 
     if response.status_code != 200:
@@ -22,10 +22,10 @@ def get_course(course_name: str):
     return {"response": parsed_response}
 
 
-@app.get("/rooms/{room_name}")
-def get_room(room_name: str):
+@app.get("/rooms")
+def get_room(name: str):
 
-    url = getURL("rooms", room_name)
+    url = getURL("rooms", name)
     response = requests.post(url)
 
     if response.status_code != 200:
@@ -48,10 +48,13 @@ def get_timetable(category: str, id: str, group: str = "", days: str = "MtWTF"):
     response = requests.post(url, json=payload)
     data = parseTimetable(response.json())
 
-    filtered_response = []
+    filtered_response = {}
+
+    # TODO: FIX GROUP FILTERING
 
     if group:
         for key in data:
+            cur_filtered_response = []
             for booking in data[key]:
                 properties = booking.get("booking_properties", {})
                 groups = properties.get("Class Group", "")
@@ -63,7 +66,9 @@ def get_timetable(category: str, id: str, group: str = "", days: str = "MtWTF"):
                     ]
                 ):
                     continue
-                filtered_response.append(booking)
+                cur_filtered_response.append(booking)
+
+            filtered_response.update({key: cur_filtered_response})
     else:
         filtered_response = data
 

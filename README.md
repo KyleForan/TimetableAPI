@@ -9,3 +9,4 @@
 ./src/timetable/main.py:                        # TODO: Actual Output
 ./src/timetable/utils/parsers.py:               # TODO: Handle multiple selections
 ./src/timetable/utils/constants.py:             # TODO: Add other types
+./src/timetable/api.py:                         # TODO: FIX GROUP FILTERING
